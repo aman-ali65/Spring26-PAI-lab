@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ data.city if data.city else 'Weather' }} - Current Weather</title>
+    <link rel="stylesheet" href="/static/css/style.css">
+    <style>
+        {% if 'clear' in data.icon.lower() or 'sunny' in data.icon.lower() %}
+        .hero-banner {
+            background-image: url('https://images.unsplash.com/photo-1601297183305-6df142704ea2?w=1600&q=80');
+        }
+        {% elif 'cloud' in data.icon.lower() and 'partly' in data.icon.lower() %}
+        .hero-banner {
+            background-image: url('https://images.unsplash.com/photo-1534088568595-a066f410bcda?w=1600&q=80');
+        }
+        {% elif 'cloud' in data.icon.lower() %}
+        .hero-banner {
+            background-image: url('https://images.unsplash.com/photo-1611928482473-7b27d24eab80?w=1600&q=80');
+        }
+        {% elif 'rain' in data.icon.lower() %}
+        .hero-banner {
+            background-image: url('https://images.unsplash.com/photo-1515694346937-94d85e41e6f0?w=1600&q=80');
+        }
+        {% elif 'snow' in data.icon.lower() %}
+        .hero-banner {
+            background-image: url('https://images.unsplash.com/photo-1491002052546-bf38f186af56?w=1600&q=80');
+        }
+        {% elif 'fog' in data.icon.lower() or 'mist' in data.icon.lower() %}
+        .hero-banner {
+            background-image: url('https://images.unsplash.com/photo-1487621167305-5d248087c724?w=1600&q=80');
+        }
+        {% else %}
+        .hero-banner {
+            background-image: url('https://images.unsplash.com/photo-1534088568595-a066f410bcda?w=1600&q=80');
+        }
+        {% endif %}
+
+        .hero-banner .back-link,
+        .hero-banner .theme-toggle {
+            position: absolute;
+            z-index: 20;
+        }
+
+        .hero-banner .back-link {
+            top: 20px;
+            left: 20px;
+            background: rgba(0, 0, 0, 0.5);
+            color: #ffffff;
+        }
+
+        .hero-banner .theme-toggle {
+            background: rgba(0, 0, 0, 0.5);
+            color: #ffffff;
+        }
+
+        [data-theme="light"] .hero-banner .back-link,
+        [data-theme="light"] .hero-banner .theme-toggle {
+            background: rgba(255, 255, 255, 0.7);
+            color: #111827;
+        }
+    </style>
+</head>
+<body>
+    <div class="hero-banner">
+        <div class="hero-overlay"></div>
+        <a href="/" class="back-link">← Back</a>
+        <div class="theme-toggle" onclick="toggleTheme()">
+            <span class="theme-icon">🌙</span>
+        </div>
+        <div class="hero-content animate-fadeInUp">
+            {% if data.city %}
+            <h1 class="hero-title">{{ data.city }}</h1>
+            {% endif %}
+            <div class="temperature">{{ "%.0f"|format(data.temperature) }}°F</div>
+            <img class="weather-icon" src="https://assetambee.s3-us-west-2.amazonaws.com/weatherIcons/PNG/{{ data.icon }}.png" alt="{{ data.summary }}" onerror="this.style.display='none'">
+            <p class="weather-summary" style="text-align: center !important;">{{ data.summary }}</p>
+            <p class="feels-like">Feels like {{ "%.0f"|format(data.feels_like) }}°F</p>
+        </div>
+    </div>
+
+    <div class="details-section">
+        <div class="container">
+            <h2 class="section-title text-center">Weather Details</h2>
+            
+            <div class="grid grid-3 mb-40">
+                <div class="detail-card">
+                    <div class="detail-icon">💧</div>
+                    <div class="detail-label">Humidity</div>
+                    <div class="detail-value">{{ "%.0f"|format(data.humidity) }}<span class="detail-unit">%</span></div>
+                </div>
+
+                <div class="detail-card">
+                    <div class="detail-icon">💨</div>
+                    <div class="detail-label">Wind Speed</div>
+                    <div class="detail-value">{{ "%.1f"|format(data.wind_speed) }}<span class="detail-unit">km/h</span></div>
+                </div>
+
+                <div class="detail-card">
+                    <div class="detail-icon">🌡️</div>
+                    <div class="detail-label">Pressure</div>
+                    <div class="detail-value">{{ "%.0f"|format(data.pressure) }}<span class="detail-unit">mb</span></div>
+                </div>
+
+                <div class="detail-card">
+                    <div class="detail-icon">👁️</div>
+                    <div class="detail-label">Visibility</div>
+                    <div class="detail-value">{{ "%.1f"|format(data.visibility) }}<span class="detail-unit">km</span></div>
+                </div>
+
+                <div class="detail-card">
+                    <div class="detail-icon">☀️</div>
+                    <div class="detail-label">UV Index</div>
+                    <div class="detail-value">
+                        {% if data.uv_index is not none %}
+                            {{ data.uv_index }}
+                        {% else %}
+                            N/A
+                        {% endif %}
+                    </div>
+                </div>
+
+                <div class="detail-card">
+                    <div class="detail-icon">💦</div>
+                    <div class="detail-label">Dew Point</div>
+                    <div class="detail-value">{{ "%.1f"|format(data.dew_point) }}<span class="detail-unit">°</span></div>
+                </div>
+
+                <div class="detail-card">
+                    <div class="detail-icon">🌬️</div>
+                    <div class="detail-label">Wind Gust</div>
+                    <div class="detail-value">{{ "%.1f"|format(data.wind_gust) }}<span class="detail-unit">km/h</span></div>
+                </div>
+
+                <div class="detail-card">
+                    <div class="detail-icon">🧭</div>
+                    <div class="detail-label">Wind Direction</div>
+                    <div class="detail-value">{{ "%.0f"|format(data.wind_direction) }}<span class="detail-unit">°</span></div>
+                </div>
+
+                <div class="detail-card">
+                    <div class="detail-icon">☔</div>
+                    <div class="detail-label">Precipitation</div>
+                    <div class="detail-value">{{ "%.0f"|format(data.precip_probability) }}<span class="detail-unit">%</span></div>
+                </div>
+            </div>
+
+            <div class="text-center" style="color: var(--text-secondary); font-size: 0.9rem;">
+                <p>Updated: {{ data.updated_at }}</p>
+                {% if data.timezone %}
+                <p>Timezone: {{ data.timezone }}</p>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+
+    <script src="/static/js/main.js"></script>
+</body>
+</html>

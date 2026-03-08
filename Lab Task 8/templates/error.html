@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Error - Weather API</title>
+    <link rel="stylesheet" href="/static/css/style.css">
+</head>
+<body>
+    <div class="theme-toggle" onclick="toggleTheme()">
+        <span class="theme-icon">🌙</span>
+    </div>
+
+    <div class="page-wrapper">
+        <div class="error-container animate-fadeIn">
+            <div class="error-icon animate-shake">⚠️</div>
+            <h1 class="error-title">Oops! Something went wrong</h1>
+            <p class="error-message">{{ data.error }}</p>
+
+            {% if data.city %}
+            <div class="error-details">
+                <p><strong>City:</strong> {{ data.city }}</p>
+            </div>
+            {% endif %}
+
+            {% if data.details %}
+            <div class="error-details">
+                <p><strong>Details:</strong></p>
+                <p>{{ data.details }}</p>
+            </div>
+            {% endif %}
+
+            <a href="/" class="btn btn-primary">← Back to Home</a>
+        </div>
+    </div>
+
+    <script src="/static/js/main.js"></script>
+</body>
+</html>

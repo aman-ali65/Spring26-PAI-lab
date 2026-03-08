@@ -1,0 +1,252 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>AI Hand Gesture Recognition</title>
+
+<style>
+
+*{
+box-sizing:border-box;
+margin:0;
+padding:0;
+}
+
+body{
+font-family: Arial, Helvetica, sans-serif;
+background: linear-gradient(135deg,#6a5acd,#8a2be2);
+min-height:100vh;
+
+display:flex;
+justify-content:center;
+align-items:flex-start;
+
+padding:40px 15px;
+color:white;
+}
+
+/* MAIN CARD */
+
+.container{
+
+width:95%;
+max-width:900px;
+
+background:rgba(255,255,255,0.12);
+backdrop-filter:blur(12px);
+
+border-radius:18px;
+
+padding:25px;
+
+box-shadow:0 15px 40px rgba(0,0,0,0.3);
+
+text-align:center;
+}
+
+/* HEADER */
+
+h1{
+font-size:28px;
+margin-bottom:6px;
+}
+
+.subtitle{
+opacity:0.85;
+margin-bottom:20px;
+}
+
+/* CAMERA BOX */
+
+.video-box{
+
+border-radius:14px;
+overflow:hidden;
+
+border:3px solid rgba(255,255,255,0.35);
+
+margin-bottom:18px;
+}
+
+.video-box img{
+
+width:100%;
+height:auto;
+display:block;
+
+}
+
+/* BUTTON */
+
+button{
+
+border:none;
+background:#00e676;
+color:black;
+
+padding:10px 18px;
+
+font-size:14px;
+
+border-radius:8px;
+
+cursor:pointer;
+
+transition:0.2s;
+
+}
+
+button:hover{
+transform:scale(1.05);
+}
+
+/* POPUP */
+
+.popup{
+
+display:none;
+
+position:fixed;
+
+top:0;
+left:0;
+
+width:100%;
+height:100%;
+
+background:rgba(0,0,0,0.6);
+
+justify-content:center;
+align-items:center;
+
+}
+
+/* POPUP CARD */
+
+.popup-content{
+
+background:white;
+
+color:black;
+
+width:420px;
+
+border-radius:10px;
+
+padding:25px;
+
+text-align:left;
+
+}
+
+.popup-content h2{
+
+margin-bottom:10px;
+
+}
+
+.popup-content ul{
+
+margin-left:18px;
+
+margin-top:10px;
+
+}
+
+.popup-content li{
+
+margin-bottom:6px;
+
+}
+
+.close{
+
+float:right;
+
+cursor:pointer;
+
+font-weight:bold;
+
+font-size:18px;
+
+}
+
+</style>
+
+</head>
+
+<body>
+
+<div class="container">
+
+<h1>🤖 AI Hand Gesture Recognition</h1>
+
+<p class="subtitle">
+MediaPipe Hand Tracking + OpenCV + Flask
+</p>
+
+<div class="video-box">
+<img src="{{ url_for('video_feed') }}">
+</div>
+
+<button onclick="openPopup()">📖 Gesture Guide</button>
+
+</div>
+
+
+<!-- POPUP -->
+
+<div class="popup" id="popup">
+
+<div class="popup-content">
+
+<span class="close" onclick="closePopup()">✖</span>
+
+<h2>Gesture Guide</h2>
+
+<p>This system detects different hand gestures.</p>
+
+<ul>
+
+<li>👍 Thumbs Up → Only thumb</li>
+
+<li>✌ Peace → Index + Middle</li>
+
+<li>☝ Pointing → Index finger</li>
+
+<li>3 Fingers → Index + Middle + Ring</li>
+
+<li>4 Fingers → All except thumb</li>
+
+<li>🖐 Open Hand → All fingers</li>
+
+<li>✊ Fist → No fingers</li>
+
+<li>🤙 Call Me → Thumb + Pinky</li>
+
+<li>👌 OK → Thumb + Index</li>
+
+</ul>
+
+</div>
+
+</div>
+
+
+<script>
+
+function openPopup(){
+document.getElementById("popup").style.display="flex"
+}
+
+function closePopup(){
+document.getElementById("popup").style.display="none"
+}
+
+</script>
+
+</body>
+</html>

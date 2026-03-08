@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Weather API - Home</title>
+    <link rel="stylesheet" href="/static/css/style.css">
+</head>
+<body>
+    <div class="theme-toggle" onclick="toggleTheme()">
+        <span class="theme-icon">🌙</span>
+    </div>
+
+    <div class="page-wrapper">
+        <div class="container">
+            <div class="page-header">
+                <h1 class="page-title">☀️ Weather API</h1>
+                <p class="page-subtitle">{{ data.message }}</p>
+            </div>
+
+            <div class="form-section">
+                <div class="form-tabs">
+                    <button class="tab-button active" onclick="switchTab('info')">City Info</button>
+                    <button class="tab-button" onclick="switchTab('current')">Current Weather</button>
+                    <button class="tab-button" onclick="switchTab('coords')">By Coordinates</button>
+                    <button class="tab-button" onclick="switchTab('history')">History</button>
+                </div>
+
+                <div id="info-form" class="search-form active" style="display: block;">
+                    <div class="form-group">
+                        <label class="form-label">City Name</label>
+                        <input type="text" class="form-input" id="info-city" placeholder="e.g., Lahore, London, Tokyo">
+                    </div>
+                    <button class="submit-button" onclick="submitInfo()">Get City Information →</button>
+                </div>
+
+                <div id="current-form" class="search-form" style="display: none;">
+                    <div class="form-group">
+                        <label class="form-label">City Name</label>
+                        <input type="text" class="form-input" id="current-city" placeholder="e.g., Karachi, New York, Paris">
+                    </div>
+                    <button class="submit-button" onclick="submitCurrent()">Get Current Weather →</button>
+                </div>
+
+                <div id="coords-form" class="search-form" style="display: none;">
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label class="form-label">Longitude</label>
+                            <input type="number" step="0.0001" class="form-input" id="longitude" placeholder="e.g., 74.3587">
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">Latitude</label>
+                            <input type="number" step="0.0001" class="form-input" id="latitude" placeholder="e.g., 31.5204">
+                        </div>
+                    </div>
+                    <button class="submit-button" onclick="submitCoords()">Get Weather by Coordinates →</button>
+                </div>
+
+                <div id="history-form" class="search-form" style="display: none;">
+                    <div class="form-group">
+                        <label class="form-label">City Name</label>
+                        <input type="text" class="form-input" id="history-city" placeholder="e.g., Islamabad">
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label class="form-label">From Date & Time</label>
+                            <input type="datetime-local" class="form-input" id="from-date">
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">To Date & Time</label>
+                            <input type="datetime-local" class="form-input" id="to-date">
+                        </div>
+                    </div>
+                    <button class="submit-button" onclick="submitHistory()">Get Weather History →</button>
+                </div>
+            </div>
+
+            <div class="quick-links">
+                <h2 class="section-title text-center">Quick Examples</h2>
+                <div class="grid grid-4">
+                    <a href="/info/Lahore" class="quick-link">
+                        <div class="link-icon">📍</div>
+                        <div class="link-title">Lahore Info</div>
+                        <div class="link-desc">/info/Lahore</div>
+                    </a>
+                    <a href="/current/Karachi" class="quick-link">
+                        <div class="link-icon">⛅</div>
+                        <div class="link-title">Karachi Weather</div>
+                        <div class="link-desc">/current/Karachi</div>
+                    </a>
+                    <a href="/current/Islamabad" class="quick-link">
+                        <div class="link-icon">🌤️</div>
+                        <div class="link-title">Islamabad Weather</div>
+                        <div class="link-desc">/current/Islamabad</div>
+                    </a>
+                    <a href="/weather?lng=74.3587&lat=31.5204" class="quick-link">
+                        <div class="link-icon">🌡️</div>
+                        <div class="link-title">By Coordinates</div>
+                        <div class="link-desc">Lahore Coords</div>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="/static/js/main.js"></script>
+    <style>
+        .search-form {
+            display: none;
+        }
+        .search-form.active {
+            display: block;
+        }
+    </style>
+</body>
+</html>

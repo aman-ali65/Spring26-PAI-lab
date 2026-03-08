@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ data.city }} - Location Info</title>
+    <link rel="stylesheet" href="/static/css/style.css">
+</head>
+<body>
+    <div class="theme-toggle" onclick="toggleTheme()">
+        <span class="theme-icon">🌙</span>
+    </div>
+
+    <div class="page-wrapper">
+        <div class="container">
+            <a href="/" class="back-link">← Back</a>
+
+            <div class="page-header">
+                <div style="font-size: 5rem; margin-bottom: 20px;">📍</div>
+                <h1 class="page-title">{{ data.city }}</h1>
+                <p class="page-subtitle">{{ data.country }}</p>
+            </div>
+
+            <div class="grid grid-2 mb-40">
+                <div class="card">
+                    <div class="card-label">Country Code</div>
+                    <div class="card-value">{{ data.country_code }}</div>
+                </div>
+            </div>
+
+            <div class="card mb-40">
+                <h2 class="section-title text-center">Geographic Coordinates</h2>
+                <div class="grid grid-2">
+                    <div class="text-center">
+                        <div class="card-label">Latitude</div>
+                        <div class="card-value">{{ "%.4f"|format(data.latitude) }}°</div>
+                    </div>
+                    <div class="text-center">
+                        <div class="card-label">Longitude</div>
+                        <div class="card-value">{{ "%.4f"|format(data.longitude) }}°</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="text-center">
+                <a href="/current/{{ data.city }}" class="btn btn-primary">View Current Weather →</a>
+            </div>
+        </div>
+    </div>
+
+    <script src="/static/js/main.js"></script>
+</body>
+</html>
